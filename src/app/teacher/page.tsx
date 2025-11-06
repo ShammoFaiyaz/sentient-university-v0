@@ -1,0 +1,42 @@
+import Link from "next/link";
+import { Card, CardTitle } from "@/components/ui/Card";
+import { agentsForRole } from "@/mock/agents";
+import { AgentCard } from "@/components/agents/AgentCard";
+
+export default function TeacherDashboard() {
+  return (
+    <div className="mx-auto max-w-6xl p-6">
+      <h1 className="text-2xl font-semibold text-primary">Teacher Dashboard</h1>
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardTitle>Grading Queue</CardTitle>
+          <ul className="list-inside list-disc text-sm text-neutral-dark/80">
+            <li>Algorithms: 12 submissions</li>
+            <li>Human-AI Ethics: 5 submissions</li>
+          </ul>
+        </Card>
+        <Card>
+          <CardTitle>Today’s Schedule</CardTitle>
+          <ul className="list-inside list-disc text-sm text-neutral-dark/80">
+            <li>10:00—11:15 Algorithms (Room 204)</li>
+            <li>13:00—14:00 Office Hours</li>
+          </ul>
+        </Card>
+        <Card>
+          <CardTitle>Drafts</CardTitle>
+          <p className="text-sm text-neutral-dark/80">Lecture 7 slides — needs examples.</p>
+        </Card>
+      </div>
+      <section className="mt-8">
+        <h2 className="mb-2 font-medium">Featured Agents</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {agentsForRole("teacher").slice(0,3).map((a) => (
+            <AgentCard key={a.id} agent={a} variant="compact" />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+
