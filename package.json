@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cmdk": "^0.2.0",
     "class-variance-authority": "^0.7.1",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.441.0",
