@@ -18,9 +18,9 @@ export function TransparencyLog() {
       <button
         aria-label="Transparency log"
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 right-5 rounded-full bg-accent px-4 py-3 text-white shadow-md hover:bg-accent-dark"
+        className="fixed bottom-5 right-5 size-12 overflow-hidden rounded-full shadow-md ring-1 ring-neutral-medium/40 transition-transform hover:scale-105"
       >
-        AI
+        <img src="/logo.png" alt="Open transparency log" className="h-full w-full object-cover" />
       </button>
 
       {open && (

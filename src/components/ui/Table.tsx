@@ -10,8 +10,8 @@ export function Table({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Th({ children }: { children: React.ReactNode }) {
-  return <th className="bg-neutral-light px-3 py-2 text-neutral-dark">{children}</th>;
+export function Th({ children }: { children?: React.ReactNode }) {
+  return <th className="bg-neutral-light px-3 py-2 text-neutral-dark">{children ?? ""}</th>;
 }
 
 export function Td({ children }: { children: React.ReactNode }) {
