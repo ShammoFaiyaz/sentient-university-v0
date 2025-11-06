@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Table, Th, Td } from "@/components/ui/Table";
 import { candidates, programs, type Candidate } from "@/mock/admissions";
@@ -9,7 +9,17 @@ import { ExplainBadge } from "@/components/ExplainBadge";
 import { FilterGroup } from "@/components/ui/FilterGroup";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function AdminAdmissions() {
+export const dynamic = "force-dynamic";
+
+export default function AdminAdmissionsPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminAdmissions />
+    </Suspense>
+  );
+}
+
+function AdminAdmissions() {
   const [program, setProgram] = useState<string>("All");
   const [minScore, setMinScore] = useState<number>(80);
   const [docs, setDocs] = useState<"all" | "complete" | "missing">("all");
