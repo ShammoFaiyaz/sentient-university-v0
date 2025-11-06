@@ -33,7 +33,7 @@ export default function LessonPage({ params }: { params: { id: string; lessonId:
         <CardTitle>Inline Mentor</CardTitle>
         <div className="flex gap-2">
           <Button onClick={explain}>Explain simply</Button>
-          <Button variant="secondary" onClick={example}>Give example</Button>
+          <Button variant="ghost" onClick={example}>Give example</Button>
           <Button variant="accent" onClick={quiz}>Quiz me</Button>
         </div>
         {response && <p className="mt-3 text-sm text-neutral-dark/90">{response}</p>}

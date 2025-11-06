@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bot, Gauge, Layers3, Sparkles, Timer, Brain, BookOpen, Calendar, Shield } from "lucide-react";
 import { useRole } from "@/components/role/RoleProvider";
+import Image from "next/image";
 
 type NavItem = { label: string; href: string; icon: any };
 
@@ -36,26 +37,27 @@ export default function Sidebar() {
   const navItems = getNav(role);
 
   return (
-    <aside className="hidden h-full w-[24rem] shrink-0 border-r lg:flex lg:flex-col" style={{ background: "var(--color-neutral-light)" }}>
-      <div className="flex items-center justify-center px-4 py-3">
-        <img src="/brand.gif" alt="Sentient University" className="h-50 w-auto" />
+    <aside className="hidden min-h-screen w-[360px] shrink-0 border-r lg:flex lg:flex-col shadow-[10px_0_30px_-12px_rgba(0,0,0,0.18)]" style={{ background: "var(--color-neutral-light)" }}>
+      <div className="flex items-center justify-center px-4 py-2">
+        <Image src="/brand.gif" alt="Sentient University" width={480} height={160} className="w-[300px] h-auto" />
       </div>
 
-      <div className="px-6 pb-4">
-        <div className="flex items-center gap-2 rounded-md bg-emerald-50 px-2 py-1 text-emerald-700">
-          <div className="h-2 w-2 rounded-full bg-emerald-500" />
-          <span className="text-xl">Connected</span>
+      <div className="mt-1 px-6">
+        <div className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-3 text-emerald-700">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="text-medium font-medium">Connected</span>
         </div>
-      </div>
 
-      <div className="px-6">
+        <div className="mt-6 px-0">
         <div className="mb-3 text-base font-semibold text-zinc-700">Agent Overview</div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2">
           <SummaryCard label="Agents active" value="17" hint="of 49 active" colorHex="#004AAD" bgGradient="linear-gradient(180deg, rgba(0,74,173,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Bot} />
           <SummaryCard label="Automation runs" value="128" hint="runs" colorHex="#008C74" bgGradient="linear-gradient(180deg, rgba(0,140,116,0.14) 0%, rgba(255,255,255,1) 100%)" Icon={Sparkles} />
           <SummaryCard label="Avg response" value="1.4s" hint="last hour" colorHex="#3D73D0" bgGradient="linear-gradient(180deg, rgba(61,115,208,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Timer} />
           <SummaryCard label="Agent skills" value="42" hint="loaded" colorHex="#F4B23E" bgGradient="linear-gradient(180deg, rgba(244,178,62,0.18) 0%, rgba(255,255,255,1) 100%)" Icon={Brain} />
         </div>
+      </div>
+
       </div>
 
       <nav className="mt-6 flex flex-1 flex-col gap-1 px-4">
@@ -74,24 +76,22 @@ export default function Sidebar() {
           );
         })}
       </nav>
-
     </aside>
   );
 }
 
 function SummaryCard({ label, value, hint, colorHex, bgGradient, Icon }: { label: string; value: string; hint: string; colorHex: string; bgGradient: string; Icon: any }) {
   return (
-    <div className="rounded-2xl p-4 shadow-md" style={{ background: bgGradient, border: "1px solid var(--color-neutral)" }}>
+    <div className="rounded-2xl p-5 shadow-md" style={{ background: bgGradient, border: "1px solid var(--color-neutral)" }}>
       <div className="flex items-center gap-2">
         <div className="p-0" style={{ color: colorHex }}>
           <Icon className="h-5 w-5" />
         </div>
         <span className="max-w-[9.5rem] break-words pr-1 text-sm font-medium leading-tight" style={{ color: colorHex }}>{label}</span>
       </div>
-      <div className="mt-2 text-2xl font-semibold" style={{ color: colorHex }}>{value}</div>
+      <div className="mt-2 text-3xl font-semibold" style={{ color: colorHex }}>{value}</div>
       <div className="text-xs text-zinc-600">{hint}</div>
     </div>
   );
 }
-
 

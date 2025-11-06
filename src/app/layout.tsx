@@ -2,11 +2,15 @@ import type { Metadata } from "next";
 import { Inter, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { AccountMenu } from "@/components/nav/AccountMenu";
 import { RoleProvider } from "@/components/role/RoleProvider";
-import { Header } from "@/components/Header";
+// Header removed in favor of inline top actions
 import { TransparencyLog } from "@/components/transparency/TransparencyLog";
 import Sidebar from "@/components/Sidebar";
 import { PageTransition } from "@/components/animate/PageTransition";
+import { CommandMenu } from "@/components/CommandMenu";
+import { ToastProvider } from "@/components/ui/Toast";
+import { DensityProvider } from "@/components/prefs/DensityProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const plex = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -25,16 +29,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${plex.className} min-h-screen flex flex-col`}>
+        <ToastProvider>
+        <DensityProvider>
         <RoleProvider>
-          <Header />
+          <a href="#main" className="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded-control bg-surface px-3 py-2 text-sm text-ink shadow-elevation-sm outline outline-2 outline-primary outline-offset-2">Skip to content</a>
           <div className="flex-1 lg:flex">
             <Sidebar />
-            <main className="flex-1">
+            <main id="main" className="relative flex-1">
+              <div className="fixed right-4 top-2 z-40">
+                <AccountMenu />
+              </div>
               <PageTransition>{children}</PageTransition>
             </main>
           </div>
+          <CommandMenu />
           <TransparencyLog />
         </RoleProvider>
+        </DensityProvider>
+        </ToastProvider>
       </body>
     </html>
   );

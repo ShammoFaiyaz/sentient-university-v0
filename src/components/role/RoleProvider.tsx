@@ -24,7 +24,7 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, []);
 
-  // Persist on change
+  // Persist on change (no toast here; AccountMenu handles notification)
   useEffect(() => {
     try {
       localStorage.setItem("su.role", role);

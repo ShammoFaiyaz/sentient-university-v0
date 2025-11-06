@@ -3,13 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --color-neutral-light: #F7F8FA;
-  --color-neutral: #D1D5DB;
-  --color-accent: #E56A54;
+  /* Brand & Semantic colors as RGB triplets for Tailwind <alpha-value> support */
+  --color-primary: 0 74 173; /* #004AAD */
+  --color-accent: 229 106 84; /* #E56A54 */
+  --color-accent-strong: 181 72 52; /* #B54834 - AA for white text */
+  --color-success: 14 159 110; /* #0E9F6E */
+  --color-warning: 192 130 0; /* #C08200 */
+  --color-error: 180 35 24; /* #B42318 */
+
+  /* Neutrals */
+  --color-ink: 31 41 55; /* #1F2937 */
+  --color-muted: 107 114 128; /* #6B7280 */
+  --color-line: 221 226 231; /* #DDE2E7 */
+  --color-surface: 249 248 243; /* #F9F8F3 */
+
+  /* Shadows */
+  --shadow-elevation-sm: 0 2px 8px rgba(0,0,0,.08);
+  --shadow-elevation-md: 0 6px 20px rgba(0,0,0,.10);
 }
 
 body {
-  @apply bg-white text-neutral-dark;
+  @apply bg-surface text-ink;
 }
 
 @layer utilities {
@@ -20,13 +34,37 @@ body {
 
 @layer base {
   h1 { @apply text-2xl font-semibold text-primary; }
-  h2 { @apply text-lg font-medium text-neutral-dark; }
+  h2 { @apply text-lg font-medium text-muted; }
 }
 
 /* Accessible focus styles */
 :focus-visible {
-  outline: 2px solid #004AAD;
+  outline: 2px solid rgb(var(--color-primary));
   outline-offset: 2px;
+}
+
+/* Touch target sizes for interactive controls */
+@media (pointer: coarse) {
+  button,
+  input,
+  select,
+  textarea,
+  a[role="button"],
+  [role="button"] {
+    min-height: 44px;
+  }
+}
+
+/* Placeholder contrast */
+::placeholder {
+  color: rgb(var(--color-muted));
+  opacity: 1; /* ensure color is applied at full strength */
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-surface: 15 23 42; /* #0F172A */
+  --color-ink: 248 250 252; /* near-white on dark */
 }
 
 /* Keyframes for subtle fades and slide-in */
@@ -35,3 +73,15 @@ body {
 
 .animate-fade-in { animation: fade-in 200ms ease-in-out forwards; }
 .animate-slide-in { animation: slide-in 260ms cubic-bezier(0.2, 0.0, 0.2, 1) forwards; }
+
+/* Density: compact adjustments */
+.density-compact .su-data-table th,
+.density-compact .su-data-table td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.density-compact .list-inside li,
+.density-compact .list-disc li {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

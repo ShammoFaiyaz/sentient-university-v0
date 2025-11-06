@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Bot, Sparkles, BookOpen, Shield, Briefcase, Brain, Megaphone, CheckCircle } from "lucide-react";
 import type { Agent } from "@/mock/agents";
+import { buttonVariants, cn } from "@/components/ui/Button";
 
 function getIcon(name?: Agent["icon"]) {
   switch (name) {
@@ -50,8 +51,25 @@ export function AgentCard({ agent, variant = "large" }: { agent: Agent; variant?
             ))}
           </ul>
         )}
-        <Link href={agent.url} target="_blank" className="mt-4 inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-dark">
-          Open demo
+        <Link
+          href={agent.url}
+          target="_blank"
+          className={cn(
+            "mt-4",
+            buttonVariants({
+              variant:
+                agent.role === "student"
+                  ? "accent"
+                  : agent.role === "teacher"
+                  ? "primary"
+                  : "primary",
+              size: "md",
+            })
+          )}
+        >
+          {agent.role === "student" && "Start mentor"}
+          {agent.role === "teacher" && (agent.id === "faculty-copilot" ? "Run co-pilot" : "Generate content")}
+          {agent.role === "admin" && (agent.id === "virtual-admissions" ? "Open admissions bot" : "Build journey")}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17L17 7" stroke="currentColor" strokeWidth="2"/><path d="M9 7H17V15" stroke="currentColor" strokeWidth="2"/></svg>
         </Link>
       </div>

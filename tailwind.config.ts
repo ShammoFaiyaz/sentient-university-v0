@@ -6,27 +6,41 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: "#004AAD", // Sentient Blue
-          light: "#2B6DCC",
-          dark: "#002E72",
-        },
-        accent: {
-          DEFAULT: "#E56A54", // Coral Intellect
-          light: "#FFB597",
-          dark: "#B54834",
-        },
-        neutral: {
-          light: "#F7F8FA",
-          medium: "#D1D5DB",
-          dark: "#1F2937",
-        },
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
+        accent: "rgb(var(--color-accent) / <alpha-value>)",
+        accentStrong: "rgb(var(--color-accent-strong) / <alpha-value>)",
+        success: "rgb(var(--color-success) / <alpha-value>)",
+        warning: "rgb(var(--color-warning) / <alpha-value>)",
+        error: "rgb(var(--color-error) / <alpha-value>)",
+        ink: "rgb(var(--color-ink) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        line: "rgb(var(--color-line) / <alpha-value>)",
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
       },
       borderRadius: {
         card: "16px",
+        control: "10px",
+      },
+      spacing: {
+        xs: "4px",
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "24px",
+        "2xl": "32px",
+        "3xl": "48px",
+        "4xl": "64px",
+      },
+      boxShadow: {
+        "elevation-sm": "var(--shadow-elevation-sm)",
+        "elevation-md": "var(--shadow-elevation-md)",
+      },
+      ringColor: {
+        DEFAULT: "rgb(var(--color-primary) / <alpha-value>)",
       },
     },
   },

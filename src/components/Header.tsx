@@ -6,8 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useRole } from "@/components/role/RoleProvider";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
-import { Unica_One } from "next/font/google";
-const unica = Unica_One({ subsets: ["latin"], weight: "400" });
 
 const roles = [
   { key: "student", label: "Student", href: "/student" },
@@ -31,10 +29,10 @@ export function Header() {
   return (
     <header className="w-full border-b border-neutral-medium bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        {/* <Link href="/" className="flex items-center gap-2 font-semibold text-primary">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-primary">
           <Image src="/logo.png" alt="Sentient University" width={28} height={28} />
-          <span className={unica.className}>Sentient University</span>
-        </Link> */}
+          <span>Sentient University</span> 
+        </Link>
         <div className="flex items-center gap-3">
           <label htmlFor="role" className="text-sm text-neutral-dark/70">
             Role
