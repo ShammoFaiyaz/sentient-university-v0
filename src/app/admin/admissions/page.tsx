@@ -8,6 +8,11 @@ import { ExplainDrawer } from "@/components/admin/ExplainDrawer";
 import { ExplainBadge } from "@/components/ExplainBadge";
 import { FilterGroup } from "@/components/ui/FilterGroup";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { agentsForRole } from "@/mock/agents";
+import { Button } from "@/components/ui/Button";
+import { useToast } from "@/components/ui/Toast";
+import { AgentTile } from "@/components/AgentTile";
+import { agents } from "@/mock/agents";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +39,7 @@ function AdminAdmissions() {
   const router = useRouter();
   const pathname = usePathname();
   const search = useSearchParams();
+  const { show } = useToast();
 
   // Initialize from query params
   useEffect(() => {
@@ -69,6 +75,17 @@ function AdminAdmissions() {
   return (
     <div className="mx-auto max-w-6xl p-6">
       <h1 className="text-2xl font-semibold text-primary">Admissions</h1>
+      <section className="mt-4">
+        <h2 className="mb-1 font-medium">Featured Agents</h2>
+        <p className="mb-2 text-xs text-muted">Transparent • Cites sources • Human override</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          {agentsForRole("admin").slice(0,3).map((a) => (
+            <AgentTile key={a.id} agent={a} />
+          ))}
+        </div>
+      </section>
+
+      
 
       <div className="mt-4 grid gap-3 md:grid-cols-4">
         <label className="text-sm">
@@ -157,6 +174,7 @@ function AdminAdmissions() {
               <Th>Score</Th>
               <Th>Why</Th>
               <Th>Docs</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
@@ -178,6 +196,15 @@ function AdminAdmissions() {
                 </Td>
                 <Td className="text-sm text-neutral-dark/80">{c.why}</Td>
                 <Td>{c.missingDocs ? "Missing" : "Complete"}</Td>
+                <Td>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Button size="sm" variant="ghost" onClick={() => router.push(`/admin/admissions/${c.id}`)}>View app</Button>
+                    <Button size="sm" variant="ghost" onClick={() => show({ title: "Request sent", message: `Requested documents from ${c.name}`, variant: "primary" })}>Request docs</Button>
+                    <Button size="sm" variant="ghost" onClick={() => show({ title: "Interview scheduled", message: `Scheduling initiated for ${c.name}`, variant: "primary" })}>Schedule interview</Button>
+                    <Button size="sm" variant="ghost" className="border-success text-success hover:bg-success/10" onClick={() => show({ title: "Admitted", message: `${c.name} admitted to ${c.program}`, variant: "success" })}>Admit</Button>
+                    <Button size="sm" variant="ghost" className="!border-error !text-error hover:!bg-error/10" onClick={() => show({ title: "Rejected", message: `${c.name} marked as rejected`, variant: "error" })}>Reject</Button>
+                  </div>
+                </Td>
               </tr>
             ))}
           </tbody>

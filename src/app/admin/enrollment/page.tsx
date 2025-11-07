@@ -6,6 +6,8 @@ import { capacity } from "@/mock/capacity";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { useMemo, useState } from "react";
+import { AgentTile } from "@/components/AgentTile";
+import { agents, agentsForRole } from "@/mock/agents";
 
 export default function AdminEnrollment() {
   const { show } = useToast();
@@ -29,6 +31,17 @@ export default function AdminEnrollment() {
   return (
     <div className="mx-auto max-w-6xl p-6">
       <h1 className="text-2xl font-semibold text-primary">Enrollment</h1>
+      <section className="mt-4">
+        <h2 className="mb-1 font-medium">Featured Agents</h2>
+        <p className="mb-2 text-xs text-muted">Transparent • Cites sources • Human override</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          {agentsForRole("admin").slice(0,3).map((a) => (
+            <AgentTile key={a.id} agent={a} />
+          ))}
+        </div>
+      </section>
+      
+      
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <Card>
           <CardTitle>Capacity</CardTitle>

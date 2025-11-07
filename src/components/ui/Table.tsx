@@ -2,7 +2,7 @@ import React from "react";
 
 export function Table({ children }: { children: React.ReactNode }) {
   return (
-    <div className="overflow-x-auto rounded-card border border-neutral-medium">
+    <div className="mt-2 overflow-x-auto rounded-card border border-neutral-medium">
       <table className="w-full min-w-[560px] text-left text-sm">
         {children}
       </table>

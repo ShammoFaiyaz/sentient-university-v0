@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { Bot, Gauge, Layers3, Sparkles, Timer, Brain, BookOpen, Calendar, Shield } from "lucide-react";
 import { useRole } from "@/components/role/RoleProvider";
 import Image from "next/image";
+import { Settings } from "lucide-react";
+import { AppFooter } from "@/components/layout/AppFooter";
 
 type NavItem = { label: string; href: string; icon: any };
 
@@ -25,7 +27,9 @@ function getNav(role: "student" | "teacher" | "admin"): NavItem[] {
   return [
     { label: "Dashboard", icon: Gauge, href: "/admin" },
     { label: "Admissions", icon: Shield, href: "/admin/admissions" },
+    { label: "Courses", icon: BookOpen, href: "/admin/courses" },
     { label: "Enrollment", icon: Layers3, href: "/admin/enrollment" },
+    { label: "Scheduling", icon: Calendar, href: "/admin/schedule" },
     { label: "Compliance", icon: Shield, href: "/admin/compliance" },
     { label: "Agents", icon: Bot, href: "/admin/agents" },
   ];
@@ -37,13 +41,13 @@ export default function Sidebar() {
   const navItems = getNav(role);
 
   return (
-    <aside className="hidden min-h-screen w-[360px] shrink-0 border-r lg:flex lg:flex-col shadow-[10px_0_30px_-12px_rgba(0,0,0,0.18)]" style={{ background: "var(--color-neutral-light)" }}>
+    <aside className="hidden h-screen w-[360px] shrink-0 overflow-y-auto border-r lg:flex lg:flex-col lg:sticky lg:top-0 lg:self-start shadow-[10px_0_30px_-12px_rgba(0,0,0,0.18)]" style={{ background: "var(--color-neutral-light)" }}>
       <div className="flex items-center justify-center px-4 py-2">
         <Image src="/brand.gif" alt="Sentient University" width={480} height={160} className="w-[300px] h-auto" />
       </div>
 
-      <div className="mt-1 px-6">
-        <div className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-3 text-emerald-700">
+      <div className="mt-0 px-6">
+        <div className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-emerald-700">
           <span className="h-2 w-2 rounded-full bg-emerald-500" />
           <span className="text-medium font-medium">Connected</span>
         </div>
@@ -51,10 +55,10 @@ export default function Sidebar() {
         <div className="mt-6 px-0">
         <div className="mb-3 text-base font-semibold text-zinc-700">Agent Overview</div>
         <div className="grid grid-cols-2 gap-2">
-          <SummaryCard label="Agents active" value="17" hint="of 49 active" colorHex="#004AAD" bgGradient="linear-gradient(180deg, rgba(0,74,173,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Bot} />
-          <SummaryCard label="Automation runs" value="128" hint="runs" colorHex="#008C74" bgGradient="linear-gradient(180deg, rgba(0,140,116,0.14) 0%, rgba(255,255,255,1) 100%)" Icon={Sparkles} />
-          <SummaryCard label="Avg response" value="1.4s" hint="last hour" colorHex="#3D73D0" bgGradient="linear-gradient(180deg, rgba(61,115,208,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Timer} />
-          <SummaryCard label="Agent skills" value="42" hint="loaded" colorHex="#F4B23E" bgGradient="linear-gradient(180deg, rgba(244,178,62,0.18) 0%, rgba(255,255,255,1) 100%)" Icon={Brain} />
+          <SidebarStatTile href={`/${role}/agents`} label="Agents active" value="17" hint="of 49 active" colorHex="#004AAD" bgGradient="linear-gradient(180deg, rgba(0,74,173,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Bot} />
+          <SidebarStatTile href={`/${role}/agents`} label="Automation runs" value="128" hint="runs" colorHex="#008C74" bgGradient="linear-gradient(180deg, rgba(0,140,116,0.14) 0%, rgba(255,255,255,1) 100%)" Icon={Sparkles} />
+          <SidebarStatTile href={`/${role}/agents`} label="Avg response" value="1.4s" hint="last hour" colorHex="#6D28D9" bgGradient="linear-gradient(180deg, rgba(109,40,217,0.12) 0%, rgba(255,255,255,1) 100%)" Icon={Timer} />
+          <SidebarStatTile href={`/${role}/agents`} label="Agent skills" value="42" hint="loaded" colorHex="#F4B23E" bgGradient="linear-gradient(180deg, rgba(244,178,62,0.18) 0%, rgba(255,255,255,1) 100%)" Icon={Brain} />
         </div>
       </div>
 
@@ -76,13 +80,35 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      <div className="sticky bottom-0 border-t border-line/60 px-4 py-4 bg-white">
+        <div className="flex items-center justify-between rounded-xl border border-line/60 bg-white p-3 shadow-elevation-sm">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">AR</div>
+            <div>
+              <div className="text-sm font-medium text-ink">Alex Rivera</div>
+              <div className="text-xs text-muted">
+                {role === "student" ? "Student • Computer Science" : role === "teacher" ? "Teacher • Faculty" : "Admin • Operations"}
+              </div>
+            </div>
+          </div>
+          <Link href="/settings" aria-label="Open settings" className="rounded-md p-2 hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
+            <Settings className="h-4 w-4 text-primary" />
+          </Link>
+        </div>
+        <AppFooter />
+      </div>
     </aside>
   );
 }
 
-function SummaryCard({ label, value, hint, colorHex, bgGradient, Icon }: { label: string; value: string; hint: string; colorHex: string; bgGradient: string; Icon: any }) {
+function SidebarStatTile({ href, label, value, hint, colorHex, bgGradient, Icon }: { href: string; label: string; value: string; hint: string; colorHex: string; bgGradient: string; Icon: any }) {
   return (
-    <div className="rounded-2xl p-5 shadow-md" style={{ background: bgGradient, border: "1px solid var(--color-neutral)" }}>
+    <Link
+      href={href}
+      className="block rounded-2xl p-5 shadow-md transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+      style={{ background: bgGradient, border: "1px solid var(--color-neutral)" }}
+    >
       <div className="flex items-center gap-2">
         <div className="p-0" style={{ color: colorHex }}>
           <Icon className="h-5 w-5" />
@@ -91,7 +117,7 @@ function SummaryCard({ label, value, hint, colorHex, bgGradient, Icon }: { label
       </div>
       <div className="mt-2 text-3xl font-semibold" style={{ color: colorHex }}>{value}</div>
       <div className="text-xs text-zinc-600">{hint}</div>
-    </div>
+    </Link>
   );
 }
 

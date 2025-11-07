@@ -1,13 +1,14 @@
 "use client";
 
 import * as React from "react";
+import { CheckCircle2 } from "lucide-react";
 
 type ToastVariant = "primary" | "accent" | "success" | "warning" | "error";
 
 export type ToastItem = {
   id: string;
   title?: string;
-  message: string;
+  message: React.ReactNode;
   variant?: ToastVariant;
   actionLabel?: string;
   onAction?: () => void;
@@ -48,7 +49,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     <ToastContext.Provider value={ctx}>
       {children}
       {/* viewport */}
-      <div className="pointer-events-none fixed right-4 top-4 z-[100] flex w-[min(96vw,380px)] flex-col gap-2">
+      <div className="pointer-events-none fixed right-4 bottom-4 z-[100] flex w-[min(96vw,380px)] flex-col gap-2">
         {toasts.map((t) => (
           <ToastView key={t.id} item={t} onClose={() => dismiss(t.id)} />
         ))}
@@ -81,9 +82,9 @@ function variantStripe(variant?: ToastVariant) {
 
 function ToastView({ item, onClose }: { item: ToastItem; onClose: () => void }) {
   return (
-    <div className="pointer-events-auto relative overflow-hidden rounded-card border border-line/60 bg-white p-3 pr-10 shadow-elevation-md dark:bg-slate-900">
-      <div className={"absolute inset-y-0 left-0 w-1 " + variantStripe(item.variant)} />
+    <div className="pointer-events-auto relative overflow-hidden rounded-card border border-line/60 bg-white p-3 pr-10 shadow-elevation-md dark:bg-slate-900 animate-slide-in">
       <div className="flex items-start gap-2">
+        {item.variant === "success" && <CheckCircle2 className="mt-0.5 h-4 w-4 text-success" />}
         <div className="mt-0.5 text-sm">
           {item.title && <div className="font-semibold text-ink">{item.title}</div>}
           <div className="text-sm text-ink/90">{item.message}</div>

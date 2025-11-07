@@ -31,7 +31,7 @@ export default function LessonPage({ params }: { params: { id: string; lessonId:
 
       <Card className="mt-4">
         <CardTitle>Inline Mentor</CardTitle>
-        <div className="flex gap-2">
+        <div className="mt-3 flex gap-2">
           <Button onClick={explain}>Explain simply</Button>
           <Button variant="ghost" onClick={example}>Give example</Button>
           <Button variant="accent" onClick={quiz}>Quiz me</Button>
