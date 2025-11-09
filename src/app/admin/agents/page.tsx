@@ -82,14 +82,14 @@
          </div>
        )}
  
-       <Section title="Student Agents">
-         <AgentsGrid items={students} onToggle={toggleOnline} />
+      <Section title="Student Agents">
+        <AgentsGrid items={students} onToggle={toggleOnline} onRemove={removeAgent} />
        </Section>
        <Section title="Teacher Agents">
-         <AgentsGrid items={teachers} onToggle={toggleOnline} />
+        <AgentsGrid items={teachers} onToggle={toggleOnline} onRemove={removeAgent} />
        </Section>
        <Section title="Admin Agents">
-         <AgentsGrid items={admins} onToggle={toggleOnline} />
+        <AgentsGrid items={admins} onToggle={toggleOnline} onRemove={removeAgent} />
        </Section>
      </div>
    );
@@ -104,7 +104,7 @@
    );
  }
  
- function AgentsGrid({ items, onToggle }: { items: ReturnType<typeof useAgents>["agents"]; onToggle: (id: string) => void }) {
+function AgentsGrid({ items, onToggle, onRemove }: { items: ReturnType<typeof useAgents>["agents"]; onToggle: (id: string) => void; onRemove: (id: string) => void }) {
    return (
      <>
        {items.map((a) => (
@@ -125,7 +125,7 @@
           <div className="absolute right-3 top-12 z-10">
             <button
               onClick={() => {
-                if (window.confirm(`Delete agent "${a.name}"?`)) removeAgent(a.id);
+                if (window.confirm(`Delete agent "${a.name}"?`)) onRemove(a.id);
               }}
               className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-error/50 text-error/80 bg-white shadow-elevation-sm hover:bg-error/5"
               aria-label={`Delete ${a.name}`}
